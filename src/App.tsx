@@ -13,7 +13,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 
 // --- Types ---
 
@@ -235,6 +235,83 @@ export default function App() {
         contents: [{ parts: [{ text: prompt }] }],
         config: {
           responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              identifikasi: {
+                type: Type.OBJECT,
+                properties: {
+                  siswa: { type: Type.STRING },
+                  materi: { type: Type.STRING },
+                  dimensi: { type: Type.STRING }
+                },
+                required: ["siswa", "materi", "dimensi"]
+              },
+              desain: {
+                type: Type.OBJECT,
+                properties: {
+                  lintasDisiplin: { type: Type.STRING },
+                  topik: { type: Type.STRING },
+                  kemitraan: { type: Type.STRING },
+                  lingkungan: { type: Type.STRING },
+                  digital: { type: Type.STRING }
+                },
+                required: ["lintasDisiplin", "topik", "kemitraan", "lingkungan", "digital"]
+              },
+              pengalaman: {
+                type: Type.OBJECT,
+                properties: {
+                  memahami: {
+                    type: Type.ARRAY,
+                    items: {
+                      type: Type.OBJECT,
+                      properties: {
+                        langkah: { type: Type.STRING },
+                        durasi: { type: Type.STRING },
+                        adaptasi: { type: Type.STRING }
+                      },
+                      required: ["langkah", "durasi", "adaptasi"]
+                    }
+                  },
+                  mengaplikasi: {
+                    type: Type.ARRAY,
+                    items: {
+                      type: Type.OBJECT,
+                      properties: {
+                        langkah: { type: Type.STRING },
+                        durasi: { type: Type.STRING },
+                        adaptasi: { type: Type.STRING }
+                      },
+                      required: ["langkah", "durasi", "adaptasi"]
+                    }
+                  },
+                  refleksi: {
+                    type: Type.ARRAY,
+                    items: {
+                      type: Type.OBJECT,
+                      properties: {
+                        langkah: { type: Type.STRING },
+                        durasi: { type: Type.STRING },
+                        adaptasi: { type: Type.STRING }
+                      },
+                      required: ["langkah", "durasi", "adaptasi"]
+                    }
+                  }
+                },
+                required: ["memahami", "mengaplikasi", "refleksi"]
+              },
+              asesmen: {
+                type: Type.OBJECT,
+                properties: {
+                  awal: { type: Type.STRING },
+                  proses: { type: Type.STRING },
+                  akhir: { type: Type.STRING }
+                },
+                required: ["awal", "proses", "akhir"]
+              }
+            },
+            required: ["identifikasi", "desain", "pengalaman", "asesmen"]
+          }
         }
       });
 
