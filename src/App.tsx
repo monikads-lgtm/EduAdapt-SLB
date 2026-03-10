@@ -6,19 +6,14 @@
 import React, { useState, useRef } from 'react';
 import { 
   BookOpen, 
-  User, 
-  School, 
   FileText, 
   ChevronRight, 
-  Download, 
-  Copy, 
-  CheckCircle2, 
   AlertCircle,
   Loader2,
   ExternalLink
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI } from "@google/genai";
 
 // --- Types ---
 
@@ -179,8 +174,16 @@ export default function App() {
     setIsGenerating(true);
 
     try {
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-      const model = "gemini-3.1-pro-preview";
+      const apiKey = process.env.GEMINI_API_KEY;
+      
+      if (!apiKey || apiKey === 'MY_GEMINI_API_KEY' || apiKey.includes('YOUR_')) {
+        setError("API Key Gemini belum dikonfigurasi dengan benar di Vercel. Pastikan Anda telah menambahkan GEMINI_API_KEY di Environment Variables Vercel dan melakukan redeploy.");
+        setIsGenerating(false);
+        return;
+      }
+
+      const ai = new GoogleGenAI({ apiKey });
+      const model = "gemini-3-flash-preview"; // Menggunakan flash untuk latensi lebih rendah dan ketersediaan lebih luas
       
       const prompt = `
         Anda adalah Spesialis Pendidikan Khusus (SLB) dan Pengembang Kurikulum Adaptif.
@@ -243,9 +246,10 @@ export default function App() {
         resultRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
 
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError("Terjadi kesalahan saat menghasilkan RPM. Silakan coba lagi.");
+      const errorMessage = err.message || "Terjadi kesalahan tidak dikenal.";
+      setError(`Gagal menghasilkan RPM: ${errorMessage}. Pastikan API Key Anda benar dan kuota masih tersedia.`);
     } finally {
       setIsGenerating(false);
     }
