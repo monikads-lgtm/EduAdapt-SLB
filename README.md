@@ -1,20 +1,41 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# EduAdapt SLB - Rencana Pembelajaran Mendalam (RPM)
 
-# Run and deploy your AI Studio app
+Aplikasi berbasis AI untuk membantu guru SLB (Sekolah Luar Biasa) dalam merancang Rencana Pembelajaran Mendalam (RPM) yang adaptif dan inklusif.
 
-This contains everything you need to run your app locally.
+## Fitur Utama
+- Perancangan RPM otomatis berbasis AI (Gemini 3 Flash).
+- Format adaptif sesuai hambatan siswa (Tunanetra, Tunarungu, dll).
+- Integrasi langsung ke Google Dokumen dengan format yang terjaga.
+- Antarmuka modern dan responsif.
 
-View your app in AI Studio: https://ai.studio/apps/9ab1ed87-f1bb-4395-b2e5-dc0b626faa07
+## Cara Menjalankan Secara Lokal
+1. Clone repositori ini:
+   ```bash
+   git clone <url-repositori-anda>
+   ```
+2. Masuk ke direktori proyek:
+   ```bash
+   cd <nama-direktori>
+   ```
+3. Instal dependensi:
+   ```bash
+   npm install
+   ```
+4. Buat file `.env` di root direktori dan tambahkan API Key Anda:
+   ```env
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+5. Jalankan aplikasi:
+   ```bash
+   npm run dev
+   ```
 
-## Run Locally
+## Cara Deployment ke Vercel
+1. Hubungkan repositori GitHub Anda ke [Vercel](https://vercel.com).
+2. Pilih proyek ini.
+3. Di bagian **Environment Variables**, tambahkan:
+   - `GEMINI_API_KEY`: Masukkan API Key Gemini Anda.
+4. Klik **Deploy**.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Lisensi
+Apache-2.0
